@@ -1,19 +1,20 @@
 source "https://rubygems.org"
 
+gem 'rails', '4.2.1'
+
 gem "bootstrap-guardsjs-rails"
-gem "bootstrap-sass", "~> 3.3.4"
-gem "coffee-rails", "~> 4.1.0"
+gem 'bootstrap-sass', '3.3.4.1'
+gem "coffee-rails"
 gem "devise"
-gem "jbuilder", "~> 2.0"
+gem "jbuilder"
 gem "jquery-rails"
 gem "omniauth-github"
-gem "rails", "~> 4.2.1"
-gem "sass-rails", "~> 5.0"
-gem "sdoc", "~> 0.4.0", group: :doc
+gem "sass-rails"
+gem "sdoc", group: :doc
 gem "therubyracer", platforms: :ruby
 gem "turbolinks"
 gem "twitter-bootstrap-rails-confirm"
-gem "uglifier", ">= 1.3.0"
+gem "uglifier"
 
 group :production do
   gem "pg"
@@ -23,7 +24,7 @@ group :development, :test do
   gem "byebug"
   gem "spring"
   gem "sqlite3"
-  gem "web-console", "~> 2.0"
+  gem "web-console"
 end
 
 group :test do
