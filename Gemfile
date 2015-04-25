@@ -8,6 +8,7 @@ gem "coffee-rails"
 gem "devise"
 gem "jbuilder"
 gem "jquery-rails"
+gem "local_time"
 gem "omniauth-github"
 gem "sass-rails"
 gem "sdoc", group: :doc

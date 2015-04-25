@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   belongs_to :conference
   belongs_to :creator, foreign_key: "creator_user_id", class_name: "User"
   belongs_to :deleted_by, foreign_key: "deleted_by_user_id", class_name: "User"
+  has_many :comments
   validates :name, presence: true
   validates_format_of :coordinator_twitter, :with => /\A[a-zA-Z0-9_]{0,15}\z/
   validate :date_within_conference_allowed_dates
@@ -45,6 +46,10 @@ class Event < ActiveRecord::Base
     starting_at.strftime "%-I:%M %p"
   end
 
+  def displayable_comments
+    comments.for_display
+  end
+
   def edit_date
     if starting_at
       starting_at.strftime "%-m/%-d/%Y"
@@ -63,6 +68,10 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def ending_at
+    fix_tz read_attribute(:ending_at)
+  end
+
   def fill(params)
     self.name = params[:name]
     self.coordinator = params[:coordinator]
@@ -70,8 +79,8 @@ class Event < ActiveRecord::Base
     self.url = params[:url]
     self.location = params[:location]
     self.description = params[:description]
-    self.starting_at = DateTime.strptime "#{params[:date]} #{params[:start_time]}", "%m/%d/%Y %I:%M %p"
-    self.ending_at = DateTime.strptime "#{params[:date]} #{params[:end_time]}", "%m/%d/%Y %I:%M %p"
+    self.starting_at = conference.parse_date_time "#{params[:date]} #{params[:start_time]}"
+    self.ending_at = conference.parse_date_time  "#{params[:date]} #{params[:end_time]}"
 
     if ending_at < starting_at
       self.ending_at += 1.day
@@ -86,11 +95,12 @@ class Event < ActiveRecord::Base
     time_state == :past
   end
 
+  def starting_at
+    fix_tz read_attribute(:starting_at)
+  end
+
   def time_state
-    now = Time.now
-    # Ugh.... I did times wrong, but this will make it parse the same
-    # as when a new record is created or existing one is edited
-    now = DateTime.strptime "#{now.month}/#{now.day}/#{now.year} #{now.hour}:#{now.min}", "%m/%d/%Y %H:%M"
+    now = conference.zone.now
 
     if ending_at < now
       :past
@@ -110,6 +120,12 @@ class Event < ActiveRecord::Base
 
     if starting_at.to_date > conference.allow_ending_at
       errors.add(:starting_at, "can't be after conference allowed end")
+    end
+  end
+
+  def fix_tz(time)
+    if time
+      time.in_time_zone conference.timezone
     end
   end
 

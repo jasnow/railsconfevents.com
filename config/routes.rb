@@ -7,10 +7,12 @@ Rails.application.routes.draw do
 
   root "events#index"
 
-  resources :events, only: [:create, :destroy, :edit, :index, :new, :update] do
+  resources :events do
     member do
       post :list
     end
+
+    resources :comments, only: [:create]
   end
 
   resources :users, only: [:index] do
