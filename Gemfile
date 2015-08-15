@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.4.rc1'
 
 gem 'bootstrap-guardsjs-rails'
 gem 'bootstrap-sass', '3.3.4.1'
