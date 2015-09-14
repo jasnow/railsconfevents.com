@@ -26,7 +26,8 @@ module ApplicationHelper
 
   def partial(name, locals = {}, &block)
     if block
-      raise "Cannot have a 'body' local when a block is given!" if locals.include?(:body)
+      raise "Cannot have a 'body' local when a block is given!" if
+        locals.include?(:body)
       locals[:body] = capture &block
     end
 

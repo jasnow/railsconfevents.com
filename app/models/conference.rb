@@ -29,7 +29,8 @@ class Conference < ActiveRecord::Base
   end
 
   def parse_date_time(time_str)
-    zone.parse DateTime.strptime(time_str, "%m/%d/%Y %I:%M %p").strftime("%Y-%m-%d %H:%M:%S")
+    zone.parse DateTime.strptime(time_str, "%m/%d/%Y %I:%M %p"
+      ).strftime("%Y-%m-%d %H:%M:%S")
   end
 
   def valid_end_date

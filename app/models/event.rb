@@ -79,8 +79,10 @@ class Event < ActiveRecord::Base
     self.url = params[:url]
     self.location = params[:location]
     self.description = params[:description]
-    self.starting_at = conference.parse_date_time "#{params[:date]} #{params[:start_time]}"
-    self.ending_at = conference.parse_date_time  "#{params[:date]} #{params[:end_time]}"
+    self.starting_at = conference.parse_date_time(
+      "#{params[:date]} #{params[:start_time]}")
+    self.ending_at = conference.parse_date_time(
+      "#{params[:date]} #{params[:end_time]}")
 
     if ending_at < starting_at
       self.ending_at += 1.day
