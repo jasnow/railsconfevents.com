@@ -89,7 +89,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.1)
-    libv8 (3.16.14.11)
+    libv8 (3.16.14.13)
     local_time (1.0.3)
       coffee-rails
     loofah (2.0.3)
