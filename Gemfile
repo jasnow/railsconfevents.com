@@ -22,11 +22,14 @@ group :production do
   gem 'pg'
 end
 
+group :development do
+  gem 'web-console'
+end
+
 group :development, :test do
   gem 'byebug'
   gem 'spring'
   gem 'sqlite3'
-  gem 'web-console'
 end
 
 group :test do
